@@ -1,0 +1,34 @@
+{
+  "name": "cookieconsent",
+  "version": "1.2.3",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel src/index.html --no-hmr",
+    "build": "npm run build:nomin && npm run build:min && npm run build:docs",
+    "build:nomin": "parcel build src/index.js --out-dir build --public-url . --out-file cookieconsent.js --no-minify",
+    "build:min": "parcel build src/index.js --out-dir build --public-url . --out-file cookieconsent.min.js",
+    "build:docs": "parcel build src/index.js --out-dir docs_src/src/assets/js --public-url . --out-file cookieconsent.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brainsum/cookieconsent.git"
+  },
+  "keywords": [],
+  "author": "Brainsum",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brainsum/cookieconsent/issues"
+  },
+  "homepage": "https://github.com/brainsum/cookieconsent#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "core-js": "^2.6.5",
+    "lodash": "^4.17.11",
+    "parcel-bundler": "^1.11.0",
+    "redom": "^3.18.0"
+  }
+}
