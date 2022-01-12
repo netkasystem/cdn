@@ -51,6 +51,12 @@ gulp.task('minify:css', function () {
     .pipe(gulp.dest(buildFolder));          // save under a new name
 });
 
+gulp.task('create_osano_css_file', function () {
+  return gulp.src('./build/cookieconsent.min.css')// get files
+    .pipe(rename('cookieconsent_osano.min.css'))  // combine them
+    .pipe(gulp.dest(buildFolder));                       // save under a new name
+});
+
 gulp.task('bump', function(callback) {
   gulp.src(['./bower.json', './package.json'])
       .pipe(bump({'version': yargs.argv.tag}))
@@ -58,7 +64,7 @@ gulp.task('bump', function(callback) {
 });
 
 gulp.task('build', function(callback) {
-  return runSequence('cleanup:begin', 'minify:js', 'minify:css', 'create_osano_file', callback);
+  return runSequence('cleanup:begin', 'minify:js', 'minify:css', 'create_osano_file', 'create_osano_css_file', callback);
 });
 
 gulp.task('build:release', function(callback) {
