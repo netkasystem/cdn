@@ -108,6 +108,38 @@ export default class Interface {
         return [el('div.ccm__list', el('span.ccm__list__title', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'modalAffectedSolutions')), el('ul', listItems))];
       }
     }
+
+    var netkaCustom = function(category) {
+      var list = [];
+
+      for(let service in window.CookieConsent.config.services) {
+        (window.CookieConsent.config.services[service].category === category) && list.push(window.CookieConsent.config.services[service]);
+      }
+      
+      if(list.length) {
+        var listItems = [];                            
+        list.forEach(item => {
+          var cur_name = Language.getTranslation(item, window.CookieConsent.config.language.current, 'name');
+          var cur_description = Language.getTranslation(item, window.CookieConsent.config.language.current, 'description');
+          var cur_duration = Language.getTranslation(item, window.CookieConsent.config.language.current, 'duration');
+
+          var ele = el('div.row',
+                      el('span.col-3', el('h6','Name')),
+                      el('label.col-9', {'title':cur_description, 'data-placement':"top", 'data-toggle':"tooltip"}, cur_name),
+                      
+                      el('span.col-3', el('h6','Description')),
+                      el('label.col-9', cur_description),
+                      
+                      el('span.col-3', el('h6','Duration')),
+                      el('label.col-9', cur_duration)
+                    )
+          
+          listItems.push(ele);
+        });
+
+        return listItems;
+      }
+    }
     
     function modalTabGroups() {
 
@@ -136,11 +168,12 @@ export default class Interface {
                                 el('div.status-on', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'on')))
                               ),
                               el('div.right',
-                                el('h3', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name')),
-                                el('p', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'description')),
-                                el('div.ccm__list',
-                                  listCookies(key)
-                                )
+                              netkaCustom(key)
+                                // el('h3', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name')),
+                                // el('p', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'description')),
+                                // el('div.ccm__list',
+                                //   listCookies(key)
+                                // )
                               )
                             )
                           )

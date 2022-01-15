@@ -2724,6 +2724,33 @@ var Interface = /*#__PURE__*/function () {
         }
       };
 
+      var netkaCustom = function netkaCustom(category) {
+        var list = [];
+
+        for (var service in window.CookieConsent.config.services) {
+          window.CookieConsent.config.services[service].category === category && list.push(window.CookieConsent.config.services[service]);
+        }
+
+        if (list.length) {
+          var listItems = [];
+          list.forEach(function (item) {
+            var cur_name = _Language.default.getTranslation(item, window.CookieConsent.config.language.current, 'name');
+
+            var cur_description = _Language.default.getTranslation(item, window.CookieConsent.config.language.current, 'description');
+
+            var cur_duration = _Language.default.getTranslation(item, window.CookieConsent.config.language.current, 'duration');
+
+            var ele = (0, _redom.el)('div.row', (0, _redom.el)('span.col-3', (0, _redom.el)('h6', 'Name')), (0, _redom.el)('label.col-9', {
+              'title': cur_description,
+              'data-placement': "top",
+              'data-toggle': "tooltip"
+            }, cur_name), (0, _redom.el)('span.col-3', (0, _redom.el)('h6', 'Description')), (0, _redom.el)('label.col-9', cur_description), (0, _redom.el)('span.col-3', (0, _redom.el)('h6', 'Duration')), (0, _redom.el)('label.col-9', cur_duration));
+            listItems.push(ele);
+          });
+          return listItems;
+        }
+      };
+
       function modalTabGroups() {
         var contentItems = [];
         var i = 0;
@@ -2747,7 +2774,12 @@ var Interface = /*#__PURE__*/function () {
             type: 'checkbox',
             'data-category': key,
             'checked': window.CookieConsent.config.categories[key].checked
-          }), (0, _redom.el)('span.ccm__switch__slider'))), (0, _redom.el)('div.status-on', _Language.default.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'on')))), (0, _redom.el)('div.right', (0, _redom.el)('h3', _Language.default.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name')), (0, _redom.el)('p', _Language.default.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'description')), (0, _redom.el)('div.ccm__list', listCookies(key))))));
+          }), (0, _redom.el)('span.ccm__switch__slider'))), (0, _redom.el)('div.status-on', _Language.default.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'on')))), (0, _redom.el)('div.right', netkaCustom(key) // el('h3', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name')),
+          // el('p', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'description')),
+          // el('div.ccm__list',
+          //   listCookies(key)
+          // )
+          ))));
           i++;
         }
 
