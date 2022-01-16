@@ -349,24 +349,28 @@ export default class Interface {
     });
 
     // If you click submit on cookie settings
-    document.getElementById('ccm__footer__consent-modal-submit').addEventListener('click', () => {
+    var buttonConsentSubmit = document.querySelectorAll('#ccm__footer__consent-modal-submit');
+    for(let button of buttonConsentSubmit) {
+      button.addEventListener('click', () => {
 
-      let switchElements = this.elements['modal'].querySelectorAll('.ccm__switch input');
-
-      Array.prototype.forEach.call(switchElements, (switchElement) => {
-        window.CookieConsent.config.categories[switchElement.dataset.category].wanted = switchElement.checked;
-      });
-
-      this.buildCookie((cookie) => {
-        this.setCookie(cookie, () => {
-          this.elements['modal'].classList.remove('ccm--visible');
-          // this.elements['bar'].classList.add('ccb--hidden');
+        let switchElements = this.elements['modal'].querySelectorAll('.ccm__switch input');
+  
+        Array.prototype.forEach.call(switchElements, (switchElement) => {
+          window.CookieConsent.config.categories[switchElement.dataset.category].wanted = switchElement.checked;
         });
+  
+        this.buildCookie((cookie) => {
+          this.setCookie(cookie, () => {
+            // this.elements['bar'].classList.add('ccb--hidden');
+          });
+        });
+        this.elements['modal'].classList.remove('ccm--visible');
+  
+        this.writeBufferToDOM();
+  
       });
-
-      this.writeBufferToDOM();
-
-    });
+    }
+    
   }
 
   writeBufferToDOM() {

@@ -206,13 +206,13 @@
       content: {
         header: 'Cookies used on the website!',
         message: 'This website uses cookies to ensure you get the best experience on our website.',
-        dismiss: 'Accept All',
+        dismiss: 'Accept',
         allow: 'Allow cookies',
-        deny: 'Decline',
+        deny: 'Reject',
         link: 'Cookies Policy',
         href: 'http://cookiesandyou.com',
         close: '&#x274c;',
-        setting: 'Cookies setting',
+        setting: 'Cookie Preferences',
       },
 
       // This is the HTML for the elements above. The string {{header}} will be replaced with the equivalent text below.
