@@ -2690,8 +2690,19 @@ var Interface = /*#__PURE__*/function () {
     }
   }, {
     key: "buildBar",
-    value: function buildBar() {
-      return (0, _redom.el)('div#cconsent-bar.ccb--hidden', (0, _redom.el)("div.ccb__wrapper", (0, _redom.el)('div.ccb__left', (0, _redom.el)('div.cc-text', _Language.default.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'barMainText'))), (0, _redom.el)('div.ccb__right', (0, _redom.el)('div.ccb__button', (0, _redom.el)('a.ccb__edit', _Language.default.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'barLinkSetting')), (0, _redom.el)('button.consent-give', _Language.default.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'barBtnAcceptAll'))))));
+    value: function buildBar() {//  return el('div#cconsent-bar.ccb--hidden',
+      //      el(`div.ccb__wrapper`,
+      //        el('div.ccb__left',
+      //          el('div.cc-text', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'barMainText'))
+      //        ),
+      //        el('div.ccb__right',
+      //          el('div.ccb__button',
+      //            el('a.ccb__edit', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'barLinkSetting')),
+      //            el('button.consent-give', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'barBtnAcceptAll'))
+      //          )
+      //        )
+      //      ),
+      //    );
     }
   }, {
     key: "buildModal",
@@ -2706,12 +2717,37 @@ var Interface = /*#__PURE__*/function () {
 
         if (list.length) {
           var listItems = [];
-
-          for (var item in list) {
-            listItems.push((0, _redom.el)('li', _Language.default.getTranslation(list[item], window.CookieConsent.config.language.current, 'name')));
-          }
-
+          list.forEach(function (item) {
+            listItems.push((0, _redom.el)('li', _Language.default.getTranslation(item, window.CookieConsent.config.language.current, 'name')));
+          });
           return [(0, _redom.el)('div.ccm__list', (0, _redom.el)('span.ccm__list__title', _Language.default.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'modalAffectedSolutions')), (0, _redom.el)('ul', listItems))];
+        }
+      };
+
+      var netkaCustom = function netkaCustom(category) {
+        var list = [];
+
+        for (var service in window.CookieConsent.config.services) {
+          window.CookieConsent.config.services[service].category === category && list.push(window.CookieConsent.config.services[service]);
+        }
+
+        if (list.length) {
+          var listItems = [];
+          list.forEach(function (item) {
+            var cur_name = _Language.default.getTranslation(item, window.CookieConsent.config.language.current, 'name');
+
+            var cur_description = _Language.default.getTranslation(item, window.CookieConsent.config.language.current, 'description');
+
+            var cur_duration = _Language.default.getTranslation(item, window.CookieConsent.config.language.current, 'duration');
+
+            var ele = (0, _redom.el)('div.row', (0, _redom.el)('span.col-3', (0, _redom.el)('h6', 'Name')), (0, _redom.el)('label.col-9', {
+              'title': cur_description,
+              'data-placement': "top",
+              'data-toggle': "tooltip"
+            }, cur_name), (0, _redom.el)('span.col-3', (0, _redom.el)('h6', 'Description')), (0, _redom.el)('label.col-9', cur_description), (0, _redom.el)('span.col-3', (0, _redom.el)('h6', 'Duration')), (0, _redom.el)('label.col-9', cur_duration));
+            listItems.push(ele);
+          });
+          return listItems;
         }
       };
 
@@ -2738,7 +2774,12 @@ var Interface = /*#__PURE__*/function () {
             type: 'checkbox',
             'data-category': key,
             'checked': window.CookieConsent.config.categories[key].checked
-          }), (0, _redom.el)('span.ccm__switch__slider'))), (0, _redom.el)('div.status-on', _Language.default.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'on')))), (0, _redom.el)('div.right', (0, _redom.el)('h3', _Language.default.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name')), (0, _redom.el)('p', _Language.default.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'description')), (0, _redom.el)('div.ccm__list', listCookies(key))))));
+          }), (0, _redom.el)('span.ccm__switch__slider'))), (0, _redom.el)('div.status-on', _Language.default.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'on')))), (0, _redom.el)('div.right', netkaCustom(key) // el('h3', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name')),
+          // el('p', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'description')),
+          // el('div.ccm__list',
+          //   listCookies(key)
+          // )
+          ))));
           i++;
         }
 
@@ -2809,15 +2850,15 @@ var Interface = /*#__PURE__*/function () {
       var that = this;
 
       _Utilities.default.ready(function () {
-        that.render('style', that.buildStyle());
-        that.render('bar', that.buildBar(), function (bar) {
-          // Show the bar after a while
-          if (!window.CookieConsent.config.cookieExists) {
-            setTimeout(function () {
-              bar.classList.remove('ccb--hidden');
-            }, window.CookieConsent.config.barTimeout);
-          }
-        });
+        that.render('style', that.buildStyle()); // that.render('bar', that.buildBar(), (bar) => {
+        //   // Show the bar after a while
+        //   if ( ! window.CookieConsent.config.cookieExists) {
+        //     setTimeout(() => {
+        //       bar.classList.remove('ccb--hidden');
+        //     }, window.CookieConsent.config.barTimeout);
+        //   }
+        // });
+
         that.render('modal', that.buildModal());
         callback();
       });
@@ -2846,9 +2887,8 @@ var Interface = /*#__PURE__*/function () {
 
             _this.buildCookie(function (cookie) {
               _this.setCookie(cookie);
-            });
+            }); // this.elements['bar'].classList.add('ccb--hidden');
 
-            _this.elements['bar'].classList.add('ccb--hidden');
 
             _this.elements['modal'].classList.remove('ccm--visible');
 
@@ -2916,12 +2956,11 @@ var Interface = /*#__PURE__*/function () {
         });
 
         _this.buildCookie(function (cookie) {
-          _this.setCookie(cookie, function () {
-            _this.elements['modal'].classList.remove('ccm--visible');
-
-            _this.elements['bar'].classList.add('ccb--hidden');
+          _this.setCookie(cookie, function () {// this.elements['bar'].classList.add('ccb--hidden');
           });
         });
+
+        _this.elements['modal'].classList.remove('ccm--visible');
 
         _this.writeBufferToDOM();
       });

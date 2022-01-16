@@ -2948,49 +2948,64 @@ var Interface = /*#__PURE__*/function () {
         _this.elements['modal'].classList.remove('ccm--visible');
       }); // If you click submit on cookie settings
 
-      document.getElementById('ccm__footer__consent-modal-submit').addEventListener('click', function () {
-        var switchElements = _this.elements['modal'].querySelectorAll('.ccm__switch input');
+      var buttonConsentSubmit = document.querySelectorAll('#ccm__footer__consent-modal-submit');
 
-        Array.prototype.forEach.call(switchElements, function (switchElement) {
-          window.CookieConsent.config.categories[switchElement.dataset.category].wanted = switchElement.checked;
-        });
-
-        _this.buildCookie(function (cookie) {
-          _this.setCookie(cookie, function () {
-            _this.elements['modal'].classList.remove('ccm--visible'); // this.elements['bar'].classList.add('ccb--hidden');
-
-          });
-        });
-
-        _this.writeBufferToDOM();
-      });
-    }
-  }, {
-    key: "writeBufferToDOM",
-    value: function writeBufferToDOM() {
-      var _iterator3 = _createForOfIteratorHelper(window.CookieConsent.buffer.appendChild),
+      var _iterator3 = _createForOfIteratorHelper(buttonConsentSubmit),
           _step3;
 
       try {
         for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var action = _step3.value;
+          var _button = _step3.value;
 
-          if (window.CookieConsent.config.categories[action.category].wanted === true) {
-            Node.prototype.appendChild.apply(action.this, action.arguments);
-          }
+          _button.addEventListener('click', function () {
+            var switchElements = _this.elements['modal'].querySelectorAll('.ccm__switch input');
+
+            Array.prototype.forEach.call(switchElements, function (switchElement) {
+              window.CookieConsent.config.categories[switchElement.dataset.category].wanted = switchElement.checked;
+            });
+
+            _this.buildCookie(function (cookie) {
+              _this.setCookie(cookie, function () {// this.elements['bar'].classList.add('ccb--hidden');
+              });
+            });
+
+            _this.elements['modal'].classList.remove('ccm--visible');
+
+            _this.writeBufferToDOM();
+          });
         }
       } catch (err) {
         _iterator3.e(err);
       } finally {
         _iterator3.f();
       }
-
-      var _iterator4 = _createForOfIteratorHelper(window.CookieConsent.buffer.insertBefore),
+    }
+  }, {
+    key: "writeBufferToDOM",
+    value: function writeBufferToDOM() {
+      var _iterator4 = _createForOfIteratorHelper(window.CookieConsent.buffer.appendChild),
           _step4;
 
       try {
         for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-          var _action = _step4.value;
+          var action = _step4.value;
+
+          if (window.CookieConsent.config.categories[action.category].wanted === true) {
+            Node.prototype.appendChild.apply(action.this, action.arguments);
+          }
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+
+      var _iterator5 = _createForOfIteratorHelper(window.CookieConsent.buffer.insertBefore),
+          _step5;
+
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var _action = _step5.value;
 
           if (window.CookieConsent.config.categories[_action.category].wanted === true) {
             _action.arguments[1] = _action.arguments[0].parentNode === null ? _action.this.lastChild : _action.arguments[1];
@@ -2998,9 +3013,9 @@ var Interface = /*#__PURE__*/function () {
           }
         }
       } catch (err) {
-        _iterator4.e(err);
+        _iterator5.e(err);
       } finally {
-        _iterator4.f();
+        _iterator5.f();
       }
     }
   }, {
