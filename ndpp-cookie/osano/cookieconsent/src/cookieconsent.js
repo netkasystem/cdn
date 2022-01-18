@@ -207,7 +207,7 @@
         header: 'Cookies used on the website!',
         message: 'This website uses cookies to ensure you get the best experience on our website.',
         dismiss: 'Accept',
-        allow: 'Allow cookies',
+        allow: 'Accept',
         deny: 'Reject',
         link: 'Cookies Policy',
         href: 'http://cookiesandyou.com',
@@ -244,9 +244,9 @@
 
       // define types of 'compliance' here. '{{value}}' strings in here are linked to `elements`
       compliance: {
-        'info': '<div class="cc-compliance">{{setting}}{{dismiss}}</div>',
+        'info': '<div class="cc-compliance">{{setting}}{{allow}}</div>',
         'opt-in': '<div class="cc-compliance cc-highlight">{{setting}}{{dismiss}}{{allow}}</div>',
-        'opt-out': '<div class="cc-compliance cc-highlight">{{setting}}{{deny}}{{dismiss}}</div>',
+        'opt-out': '<div class="cc-compliance cc-highlight">{{setting}}{{deny}}{{allow}}</div>',
       },
 
       // select your type of popup here
