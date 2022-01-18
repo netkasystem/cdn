@@ -206,7 +206,7 @@
       content: {
         header: 'Cookies used on the website!',
         message: 'This website uses cookies to ensure you get the best experience on our website.',
-        dismiss: 'Accept',
+        dismiss: 'Dismiss',
         allow: 'Accept',
         deny: 'Reject',
         link: 'Cookies Policy',
