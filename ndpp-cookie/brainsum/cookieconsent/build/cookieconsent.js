@@ -5867,6 +5867,7 @@ var CookieConsent = /*#__PURE__*/function () {
       UI.buildInterface(function () {
         UI.addEventListeners();
       });
+      dispatchEvent("onBrainsumLoad", true, true);
     }
   }]);
 
