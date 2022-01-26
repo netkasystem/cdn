@@ -2850,6 +2850,12 @@ var Interface = /*#__PURE__*/function () {
       var that = this;
 
       _Utilities.default.ready(function () {
+        //remove style before create
+        $('style').each(function () {
+          if (this.innerText.includes("cconsent")) {
+            this.remove();
+          }
+        });
         that.render('style', that.buildStyle()); // that.render('bar', that.buildBar(), (bar) => {
         //   // Show the bar after a while
         //   if ( ! window.CookieConsent.config.cookieExists) {
@@ -2858,7 +2864,11 @@ var Interface = /*#__PURE__*/function () {
         //     }, window.CookieConsent.config.barTimeout);
         //   }
         // });
+        //remove cconsent-modal before create
 
+        $('[id*=cconsent-modal]').each(function () {
+          this.remove();
+        });
         that.render('modal', that.buildModal());
         callback();
       });

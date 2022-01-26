@@ -11,9 +11,9 @@ export default class Interface {
 
   buildStyle() {
     return el('style',
-      '#cconsent-bar, #cconsent-bar * { box-sizing:border-box }', 
-      '#cconsent-bar { background-color:' + window.CookieConsent.config.theme.barColor + '; color:' + window.CookieConsent.config.theme.barTextColor + '; padding:15px; text-align:right; font-family:sans-serif; font-size:14px; line-height:18px; position:fixed; bottom:0; left:0; width:100%; z-index:9998; transform: translateY(0); transition: transform .6s ease-in-out; transition-delay: .3s;}', 
-      '#cconsent-bar.ccb--hidden {transform: translateY(100%); display:block;}', 
+      '#cconsent-bar, #cconsent-bar * { box-sizing:border-box }',
+      '#cconsent-bar { background-color:' + window.CookieConsent.config.theme.barColor + '; color:' + window.CookieConsent.config.theme.barTextColor + '; padding:15px; text-align:right; font-family:sans-serif; font-size:14px; line-height:18px; position:fixed; bottom:0; left:0; width:100%; z-index:9998; transform: translateY(0); transition: transform .6s ease-in-out; transition-delay: .3s;}',
+      '#cconsent-bar.ccb--hidden {transform: translateY(100%); display:block;}',
       '#cconsent-bar .ccb__wrapper { display:flex; flex-wrap:wrap; justify-content:space-between; max-width:1800px; margin:0 auto;}',
       '#cconsent-bar .ccb__left { align-self:center; text-align:left; margin: 15px 0;}',
       '#cconsent-bar .ccb__right { align-self:center; white-space: nowrap;}',
@@ -68,7 +68,7 @@ export default class Interface {
       '#cconsent-modal .ccm__footer button { line-height:normal; font-size:14px; transition: background-color .5s ease-out; background-color:' + window.CookieConsent.config.theme.modalMainButtonColor + '; color:' + window.CookieConsent.config.theme.modalMainButtonTextColor + '; border:none; padding:13px; min-width:110px; border-radius: 2px; cursor:pointer; }',
       '#cconsent-modal .ccm__footer button:hover { background-color:' + Utilities.lightenDarkenColor(window.CookieConsent.config.theme.modalMainButtonColor, -20) + '; }',
       '#cconsent-modal .ccm__footer button#ccm__footer__consent-modal-submit {  margin-right:10px; }'
-      );
+    );
   }
 
   buildBar() {
@@ -90,17 +90,17 @@ export default class Interface {
   buildModal() {
 
     // Cookie names list middleware
-    var listCookies = function(category) {
+    var listCookies = function (category) {
       var list = [];
 
-      for(let service in window.CookieConsent.config.services) {
+      for (let service in window.CookieConsent.config.services) {
         (window.CookieConsent.config.services[service].category === category) && list.push(window.CookieConsent.config.services[service]);
       }
-      
-      if(list.length) {
-        
+
+      if (list.length) {
+
         var listItems = [];
-        
+
         list.forEach(item => {
           listItems.push(el('li', Language.getTranslation(item, window.CookieConsent.config.language.current, 'name')));
         });
@@ -109,38 +109,38 @@ export default class Interface {
       }
     }
 
-    var netkaCustom = function(category) {
+    var netkaCustom = function (category) {
       var list = [];
 
-      for(let service in window.CookieConsent.config.services) {
+      for (let service in window.CookieConsent.config.services) {
         (window.CookieConsent.config.services[service].category === category) && list.push(window.CookieConsent.config.services[service]);
       }
-      
-      if(list.length) {
-        var listItems = [];                            
+
+      if (list.length) {
+        var listItems = [];
         list.forEach(item => {
           var cur_name = Language.getTranslation(item, window.CookieConsent.config.language.current, 'name');
           var cur_description = Language.getTranslation(item, window.CookieConsent.config.language.current, 'description');
           var cur_duration = Language.getTranslation(item, window.CookieConsent.config.language.current, 'duration');
 
           var ele = el('div.row.ccm__list',
-                      el('span.col-3.ccm__list__title', el('h6','Name')),
-                      el('label.col-9', {'title':cur_description, 'data-placement':"top", 'data-toggle':"tooltip"}, cur_name),
-                      
-                      el('span.col-3.ccm__list__title', el('h6','Description')),
-                      el('label.col-9', cur_description),
-                      
-                      el('span.col-3.ccm__list__title', el('h6','Duration')),
-                      el('label.col-9', cur_duration)
-                    )
-          
+            el('span.col-3.ccm__list__title', el('h6', 'Name')),
+            el('label.col-9', { 'title': cur_description, 'data-placement': "top", 'data-toggle': "tooltip" }, cur_name),
+
+            el('span.col-3.ccm__list__title', el('h6', 'Description')),
+            el('label.col-9', cur_description),
+
+            el('span.col-3.ccm__list__title', el('h6', 'Duration')),
+            el('label.col-9', cur_duration)
+          )
+
           listItems.push(ele);
         });
 
         return listItems;
       }
     }
-    
+
     function modalTabGroups() {
 
       let contentItems = [];
@@ -148,36 +148,36 @@ export default class Interface {
       let i = 0;
       for (let key in window.CookieConsent.config.categories) {
 
-        contentItems.push(el('dl.ccm__tabgroup' + '.' + key + ((window.CookieConsent.config.categories[key].checked) ? '.checked-5jhk' : ''), {'data-category':key},
-                            el('dt.ccm__tab-head', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name'),
-                              el('a.ccm__tab-head__icon-wedge', 
-                                el(document.createElementNS("http://www.w3.org/2000/svg", "svg"), { version: "1.2", preserveAspectRatio: "none", viewBox: "0 0 24 24", class: "icon-wedge-svg", "data-id": "e9b3c566e8c14cfea38af128759b91a3", style: "opacity: 1; mix-blend-mode: normal; fill: rgb(51, 51, 51); width: 32px; height: 32px;"},
-                                  el(document.createElementNS("http://www.w3.org/2000/svg", "path"), { 'xmlns:default': "http://www.w3.org/2000/svg", id: "angle-down", d: "M17.2,9.84c0-0.09-0.04-0.18-0.1-0.24l-0.52-0.52c-0.13-0.13-0.33-0.14-0.47-0.01c0,0-0.01,0.01-0.01,0.01  l-4.1,4.1l-4.09-4.1C7.78,8.94,7.57,8.94,7.44,9.06c0,0-0.01,0.01-0.01,0.01L6.91,9.6c-0.13,0.13-0.14,0.33-0.01,0.47  c0,0,0.01,0.01,0.01,0.01l4.85,4.85c0.13,0.13,0.33,0.14,0.47,0.01c0,0,0.01-0.01,0.01-0.01l4.85-4.85c0.06-0.06,0.1-0.15,0.1-0.24  l0,0H17.2z", style: "fill: rgb(51, 51, 51);" })
-                                )
-                              ),
-                            ),
-                            el('dd.ccm__tab-content',
-                              el('div.ccm__tab-content__left', 
-                                ( ! window.CookieConsent.config.categories[key].needed) && el('div.ccm__switch-component', el('div.status-off', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'off')),
-                                el('div.ccm__switch-group',
-                                  el('label.ccm__switch',
-                                    el('input.category-onoff', {type:'checkbox', 'data-category': key, 'checked': window.CookieConsent.config.categories[key].checked}),
-                                    el('span.ccm__switch__slider')
-                                  )
-                                ),
-                                el('div.status-on', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'on')))
-                              ),
-                              el('div.right',
-                              netkaCustom(key)
-                                // el('h3', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name')),
-                                // el('p', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'description')),
-                                // el('div.ccm__list',
-                                //   listCookies(key)
-                                // )
-                              )
-                            )
-                          )
-                        );
+        contentItems.push(el('dl.ccm__tabgroup' + '.' + key + ((window.CookieConsent.config.categories[key].checked) ? '.checked-5jhk' : ''), { 'data-category': key },
+          el('dt.ccm__tab-head', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name'),
+            el('a.ccm__tab-head__icon-wedge',
+              el(document.createElementNS("http://www.w3.org/2000/svg", "svg"), { version: "1.2", preserveAspectRatio: "none", viewBox: "0 0 24 24", class: "icon-wedge-svg", "data-id": "e9b3c566e8c14cfea38af128759b91a3", style: "opacity: 1; mix-blend-mode: normal; fill: rgb(51, 51, 51); width: 32px; height: 32px;" },
+                el(document.createElementNS("http://www.w3.org/2000/svg", "path"), { 'xmlns:default': "http://www.w3.org/2000/svg", id: "angle-down", d: "M17.2,9.84c0-0.09-0.04-0.18-0.1-0.24l-0.52-0.52c-0.13-0.13-0.33-0.14-0.47-0.01c0,0-0.01,0.01-0.01,0.01  l-4.1,4.1l-4.09-4.1C7.78,8.94,7.57,8.94,7.44,9.06c0,0-0.01,0.01-0.01,0.01L6.91,9.6c-0.13,0.13-0.14,0.33-0.01,0.47  c0,0,0.01,0.01,0.01,0.01l4.85,4.85c0.13,0.13,0.33,0.14,0.47,0.01c0,0,0.01-0.01,0.01-0.01l4.85-4.85c0.06-0.06,0.1-0.15,0.1-0.24  l0,0H17.2z", style: "fill: rgb(51, 51, 51);" })
+              )
+            ),
+          ),
+          el('dd.ccm__tab-content',
+            el('div.ccm__tab-content__left',
+              (!window.CookieConsent.config.categories[key].needed) && el('div.ccm__switch-component', el('div.status-off', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'off')),
+                el('div.ccm__switch-group',
+                  el('label.ccm__switch',
+                    el('input.category-onoff', { type: 'checkbox', 'data-category': key, 'checked': window.CookieConsent.config.categories[key].checked }),
+                    el('span.ccm__switch__slider')
+                  )
+                ),
+                el('div.status-on', Language.getTranslation(window.CookieConsent.config, window.CookieConsent.config.language.current, 'on')))
+            ),
+            el('div.right',
+              netkaCustom(key)
+              // el('h3', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'name')),
+              // el('p', Language.getTranslation(window.CookieConsent.config.categories[key], window.CookieConsent.config.language.current, 'description')),
+              // el('div.ccm__list',
+              //   listCookies(key)
+              // )
+            )
+          )
+        )
+        );
 
         i++;
       }
@@ -211,21 +211,21 @@ export default class Interface {
   modalRedrawIcons() {
     var tabGroups = this.elements['modal'].querySelectorAll('.ccm__tabgroup');
 
-    for(let tabGroup of tabGroups) {
-      if(window.CookieConsent.config.categories[tabGroup.dataset.category].checked) {
-        if( ! tabGroup.classList.contains('checked-5jhk')) {
+    for (let tabGroup of tabGroups) {
+      if (window.CookieConsent.config.categories[tabGroup.dataset.category].checked) {
+        if (!tabGroup.classList.contains('checked-5jhk')) {
           tabGroup.classList.add('checked-5jhk');
           tabGroup.querySelector('input.category-onoff').checked = true;
         };
       } else {
-        if(tabGroup.classList.contains('checked-5jhk')) tabGroup.classList.remove('checked-5jhk');
+        if (tabGroup.classList.contains('checked-5jhk')) tabGroup.classList.remove('checked-5jhk');
         tabGroup.querySelector('input.category-onoff').checked = false;
       }
     }
   }
 
   render(name, elem, callback) {
-    if (typeof callback === 'undefined') callback = function(){};
+    if (typeof callback === 'undefined') callback = function () { };
     if (typeof this.elements[name] !== 'undefined') {
       this.elements[name].parentNode.replaceChild(elem, this.elements[name]);
       this.elements[name] = elem;
@@ -243,11 +243,17 @@ export default class Interface {
 
   buildInterface(callback) {
 
-    if (typeof callback === 'undefined') callback = function(){};
+    if (typeof callback === 'undefined') callback = function () { };
     var that = this;
 
-    Utilities.ready(function() {
+    Utilities.ready(function () {
 
+      //remove style before create
+      $('style').each(function () {
+        if (this.innerText.includes("cconsent")) {
+          this.remove();
+        }
+      });
       that.render('style', that.buildStyle());
 
       // that.render('bar', that.buildBar(), (bar) => {
@@ -260,6 +266,10 @@ export default class Interface {
       //   }
       // });
 
+      //remove cconsent-modal before create
+      $('[id*=cconsent-modal]').each(function () {
+        this.remove();
+      });
       that.render('modal', that.buildModal());
 
       callback();
@@ -271,26 +281,26 @@ export default class Interface {
     // If you click Accept all cookies
     var buttonConsentGive = document.querySelectorAll('.consent-give');
 
-    for(let button of buttonConsentGive) {
+    for (let button of buttonConsentGive) {
       button.addEventListener('click', () => {
-  
+
         // We set config to full consent
-        for(let key in window.CookieConsent.config.categories) {
+        for (let key in window.CookieConsent.config.categories) {
           window.CookieConsent.config.categories[key].wanted =
-          window.CookieConsent.config.categories[key].checked = true;
+            window.CookieConsent.config.categories[key].checked = true;
         }
-        
+
         this.writeBufferToDOM();
-  
+
         this.buildCookie((cookie) => {
           this.setCookie(cookie);
         });
-  
+
         // this.elements['bar'].classList.add('ccb--hidden');
         this.elements['modal'].classList.remove('ccm--visible');
 
         this.modalRedrawIcons();
-  
+
       });
     }
 
@@ -311,16 +321,16 @@ export default class Interface {
 
         function getDlParent(eventTarget) {
           var parent = eventTarget.parentNode;
-          if(parent.nodeName !== 'DL') {
+          if (parent.nodeName !== 'DL') {
             return getDlParent(parent);
           } else {
             return parent;
           }
         }
-        
+
         var parentDl = getDlParent(event.target);
-        
-        if(parentDl.classList.contains('ccm__tabgroup--open')) {
+
+        if (parentDl.classList.contains('ccm__tabgroup--open')) {
           parentDl.classList.remove('ccm__tabgroup--open');
         } else {
           parentDl.classList.add('ccm__tabgroup--open');
@@ -330,10 +340,10 @@ export default class Interface {
       // If you click on/off switch
       if (event.target.classList.contains('category-onoff')) {
         window.CookieConsent.config.categories[event.target.dataset.category].wanted =
-        window.CookieConsent.config.categories[event.target.dataset.category].checked = (event.target.checked === true) ? true : false;
+          window.CookieConsent.config.categories[event.target.dataset.category].checked = (event.target.checked === true) ? true : false;
 
         var dt = document.querySelector('.ccm__tabgroup.' + event.target.dataset.category);
-        if(event.target.checked === false && dt.classList.contains('checked-5jhk')) {
+        if (event.target.checked === false && dt.classList.contains('checked-5jhk')) {
           dt.classList.remove('checked-5jhk');
         } else {
           dt.classList.add('checked-5jhk');
@@ -350,38 +360,38 @@ export default class Interface {
 
     // If you click submit on cookie settings
     var buttonConsentSubmit = document.querySelectorAll('#ccm__footer__consent-modal-submit');
-    for(let button of buttonConsentSubmit) {
+    for (let button of buttonConsentSubmit) {
       button.addEventListener('click', () => {
 
         let switchElements = this.elements['modal'].querySelectorAll('.ccm__switch input');
-  
+
         Array.prototype.forEach.call(switchElements, (switchElement) => {
           window.CookieConsent.config.categories[switchElement.dataset.category].wanted = switchElement.checked;
         });
-  
+
         this.buildCookie((cookie) => {
           this.setCookie(cookie, () => {
             // this.elements['bar'].classList.add('ccb--hidden');
           });
         });
         this.elements['modal'].classList.remove('ccm--visible');
-  
+
         this.writeBufferToDOM();
-  
+
       });
     }
-    
+
   }
 
   writeBufferToDOM() {
 
-    for(let action of window.CookieConsent.buffer.appendChild) {
+    for (let action of window.CookieConsent.buffer.appendChild) {
       if (window.CookieConsent.config.categories[action.category].wanted === true) {
         Node.prototype.appendChild.apply(action.this, action.arguments);
       }
     }
 
-    for(let action of window.CookieConsent.buffer.insertBefore) {
+    for (let action of window.CookieConsent.buffer.insertBefore) {
       if (window.CookieConsent.config.categories[action.category].wanted === true) {
         action.arguments[1] = (action.arguments[0].parentNode === null) ? action.this.lastChild : action.arguments[1];
         Node.prototype.insertBefore.apply(action.this, action.arguments);
@@ -395,19 +405,19 @@ export default class Interface {
       categories: {},
       services: []
     };
-    
-    for(let key in window.CookieConsent.config.categories) {
+
+    for (let key in window.CookieConsent.config.categories) {
       cookie.categories[key] = {
         wanted: window.CookieConsent.config.categories[key].wanted,
       };
     }
 
     cookie.services = Utilities.listGlobalServices();
-  
+
     if (callback) callback(cookie);
     return cookie;
   }
-  
+
   setCookie(cookie, callback) {
     document.cookie = `cconsent=${JSON.stringify(cookie)}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;`;
     if (callback) callback();
