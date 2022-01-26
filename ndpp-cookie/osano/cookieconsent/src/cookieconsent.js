@@ -1488,5 +1488,6 @@
   cc.hasInitialised = true;
 
   window.cookieconsent_osano = cc;
+  dispatchEvent("onOsanoLoad", true, true);
 
 }(window.cookieconsent_osano || {}));
