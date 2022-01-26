@@ -61,7 +61,7 @@ export default class Interface {
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-content .ccm__tab-content__left .ccm__switch input:checked + .ccm__switch__slider:before  {-webkit-transform: translateX(20px); -ms-transform: translateX(20px); transform: translateX(20px);}',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-content h3 {font-size:18px; margin-bottom:10px; line-height:1;}',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-content p {color:#444; margin-bottom:0}',
-      '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-content .ccm__list:not(:empty) {margin-top:30px;}',
+      '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-content .ccm__list:not(:empty) {margin-top:0px;}',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-content .ccm__list .ccm__list__title {color:#333; font-weight:600;}',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-content .ccm__list ul { margin:15px 0; padding-left:15px }',
       '#cconsent-modal .ccm__footer { padding:35px; background-color:#EFEFEF; text-align:center; display: flex; align-items:center; justify-content:flex-end; }',
@@ -123,14 +123,14 @@ export default class Interface {
           var cur_description = Language.getTranslation(item, window.CookieConsent.config.language.current, 'description');
           var cur_duration = Language.getTranslation(item, window.CookieConsent.config.language.current, 'duration');
 
-          var ele = el('div.row',
-                      el('span.col-3', el('h6','Name')),
+          var ele = el('div.row.ccm__list',
+                      el('span.col-3.ccm__list__title', el('h6','Name')),
                       el('label.col-9', {'title':cur_description, 'data-placement':"top", 'data-toggle':"tooltip"}, cur_name),
                       
-                      el('span.col-3', el('h6','Description')),
+                      el('span.col-3.ccm__list__title', el('h6','Description')),
                       el('label.col-9', cur_description),
                       
-                      el('span.col-3', el('h6','Duration')),
+                      el('span.col-3.ccm__list__title', el('h6','Duration')),
                       el('label.col-9', cur_duration)
                     )
           
