@@ -5891,6 +5891,6 @@ var cookieConsent = new _CookieConsent.default();
 window.CookieConsent = window.CookieConsent || {};
 window.CookieConsent.init = cookieConsent.init;
 
-_Utilities.default.dispatchEvent("onBrainsumLoad", true, true);
+_Utilities.default.dispatchEvent(document, 'onBrainsumLoad');
 },{"core-js/es6/symbol":"CtPZ","core-js/fn/symbol/iterator":"KQqW","./lib/CookieConsent":"ylkZ","./lib/Utilities":"wJ6H"}]},{},["Focm"], null)
 //# sourceMappingURL=cookieconsent.js.map
