@@ -7,4 +7,4 @@ const cookieConsent = new CookieConsent();
 
 window.CookieConsent = window.CookieConsent || {};
 window.CookieConsent.init = cookieConsent.init;
-Utilities.dispatchEvent(document, 'onBrainsumLoad');
+document.dispatchEvent(new Event('onBrainsumLoad'));

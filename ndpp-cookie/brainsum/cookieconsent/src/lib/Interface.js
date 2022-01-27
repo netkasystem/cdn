@@ -67,7 +67,10 @@ export default class Interface {
       '#cconsent-modal .ccm__footer { padding:35px; background-color:#EFEFEF; text-align:center; display: flex; align-items:center; justify-content:flex-end; }',
       '#cconsent-modal .ccm__footer button { line-height:normal; font-size:14px; transition: background-color .5s ease-out; background-color:' + window.CookieConsent.config.theme.modalMainButtonColor + '; color:' + window.CookieConsent.config.theme.modalMainButtonTextColor + '; border:none; padding:13px; min-width:110px; border-radius: 2px; cursor:pointer; }',
       '#cconsent-modal .ccm__footer button:hover { background-color:' + Utilities.lightenDarkenColor(window.CookieConsent.config.theme.modalMainButtonColor, -20) + '; }',
-      '#cconsent-modal .ccm__footer button#ccm__footer__consent-modal-submit {  margin-right:10px; }'
+      '#cconsent-modal .ccm__footer button#ccm__footer__consent-modal-submit {  margin-right:10px; }',
+      '#cconsent-modal table {font-family: arial, sans-serif;border-collapse: collapse;width: 100 %;}',
+      '#cconsent-modal td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}',
+      '#cconsent-modal tr:nth-child(even){background-color: #dddddd;}'
     );
   }
 
@@ -117,21 +120,36 @@ export default class Interface {
       }
 
       if (list.length) {
+        var table = el('table',
+          el('tr.ccm__list',
+            el('th.ccm__list__title', 'Name'),
+            el('th.ccm__list__title', 'Description'),
+            el('th.ccm__list__title', 'Duration'),
+          ),
+          getListItems(category));
+        return table;
+      }
+    }
+
+
+    var getListItems = function (category) {
+      var list = [];
+
+      for (let service in window.CookieConsent.config.services) {
+        (window.CookieConsent.config.services[service].category === category) && list.push(window.CookieConsent.config.services[service]);
+      }
+
+      if (list.length) {
         var listItems = [];
         list.forEach(item => {
           var cur_name = Language.getTranslation(item, window.CookieConsent.config.language.current, 'name');
           var cur_description = Language.getTranslation(item, window.CookieConsent.config.language.current, 'description');
           var cur_duration = Language.getTranslation(item, window.CookieConsent.config.language.current, 'duration');
 
-          var ele = el('div.row.ccm__list',
-            el('span.col-3.ccm__list__title', el('h6', 'Name')),
-            el('label.col-9', { 'title': cur_description, 'data-placement': "top", 'data-toggle': "tooltip" }, cur_name),
-
-            el('span.col-3.ccm__list__title', el('h6', 'Description')),
-            el('label.col-9', cur_description),
-
-            el('span.col-3.ccm__list__title', el('h6', 'Duration')),
-            el('label.col-9', cur_duration)
+          var ele = el('tr.ccm__list',
+            el('td', cur_name),
+            el('td', cur_description),
+            el('td', cur_duration)
           )
 
           listItems.push(ele);
