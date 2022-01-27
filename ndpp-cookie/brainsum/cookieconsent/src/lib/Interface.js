@@ -249,10 +249,8 @@ export default class Interface {
     Utilities.ready(function () {
 
       //remove style before create
-      $('style').each(function () {
-        if (this.innerText.includes("cconsent")) {
-          this.remove();
-        }
+      document.querySelectorAll('style').forEach(x => {
+        if (x.innerText.includes("cconsent")) { x.remove(); }
       });
       that.render('style', that.buildStyle());
 
@@ -267,9 +265,7 @@ export default class Interface {
       // });
 
       //remove cconsent-modal before create
-      $('[id*=cconsent-modal]').each(function () {
-        this.remove();
-      });
+      document.querySelectorAll('[id*=cconsent-modal]').forEach(x => x.remove());
       that.render('modal', that.buildModal());
 
       callback();

@@ -2851,9 +2851,9 @@ var Interface = /*#__PURE__*/function () {
 
       _Utilities.default.ready(function () {
         //remove style before create
-        $('style').each(function () {
-          if (this.innerText.includes("cconsent")) {
-            this.remove();
+        document.querySelectorAll('style').forEach(function (x) {
+          if (x.innerText.includes("cconsent")) {
+            x.remove();
           }
         });
         that.render('style', that.buildStyle()); // that.render('bar', that.buildBar(), (bar) => {
@@ -2866,8 +2866,8 @@ var Interface = /*#__PURE__*/function () {
         // });
         //remove cconsent-modal before create
 
-        $('[id*=cconsent-modal]').each(function () {
-          this.remove();
+        document.querySelectorAll('[id*=cconsent-modal]').forEach(function (x) {
+          return x.remove();
         });
         that.render('modal', that.buildModal());
         callback();
