@@ -5867,7 +5867,6 @@ var CookieConsent = /*#__PURE__*/function () {
       UI.buildInterface(function () {
         UI.addEventListeners();
       });
-      dispatchEvent("onBrainsumLoad", true, true);
     }
   }]);
 
@@ -5884,10 +5883,14 @@ require("core-js/fn/symbol/iterator");
 
 var _CookieConsent = _interopRequireDefault(require("./lib/CookieConsent"));
 
+var _Utilities = _interopRequireDefault(require("./lib/Utilities"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var cookieConsent = new _CookieConsent.default();
 window.CookieConsent = window.CookieConsent || {};
 window.CookieConsent.init = cookieConsent.init;
-},{"core-js/es6/symbol":"CtPZ","core-js/fn/symbol/iterator":"KQqW","./lib/CookieConsent":"ylkZ"}]},{},["Focm"], null)
+
+_Utilities.default.dispatchEvent("onBrainsumLoad", true, true);
+},{"core-js/es6/symbol":"CtPZ","core-js/fn/symbol/iterator":"KQqW","./lib/CookieConsent":"ylkZ","./lib/Utilities":"wJ6H"}]},{},["Focm"], null)
 //# sourceMappingURL=cookieconsent.js.map

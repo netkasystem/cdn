@@ -25,7 +25,6 @@ export default class CookieConsent {
     UI.buildInterface(() => {
       UI.addEventListeners();
     });
-    dispatchEvent("onBrainsumLoad", true, true);
   }
 
 }
