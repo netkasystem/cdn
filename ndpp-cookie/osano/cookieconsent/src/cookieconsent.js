@@ -1491,6 +1491,4 @@
   cc.hasInitialised = true;
 
   window.cookieconsent_osano = cc;
-  document.dispatchEvent(new Event("onOsanoLoad"));
-
 }(window.cookieconsent_osano || {}));
