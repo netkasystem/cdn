@@ -58,23 +58,26 @@ export default class Utilities {
   // Create an array of services from Cookieconsent global object
   // Filter based on category or leave empty is all is wanted
   static listGlobalServices(category) {
-    let categories = [];
+    let services = [];
 
     // Global config objectnot set
-    if (typeof window.CookieConsent === 'undefined') return categories;
+    if (typeof window.CookieConsent === 'undefined') return services;
 
-    // Category is not specified or opposite
-    if (typeof category === 'undefined') {
-      for (let key in window.CookieConsent.config.services) {
-        categories.push(key);
-      }
-    } else {
-      for (let key in window.CookieConsent.config.services) {
-        if (window.CookieConsent.config.services[key].category === category)  categories.push(key);
+    let categories = category ?? window.CookieConsent.config.categories;
+    let categoriesKey = [];
+    for (let key in categories) {
+      if (categories[key]?.wanted){
+        categoriesKey.push(key);
       }
     }
 
-    return categories;
+    for (let key in window.CookieConsent.config.services) {
+      if (categoriesKey.includes(window.CookieConsent.config.services[key].category)) {
+        services.push(key);
+      }
+    }
+    
+    return services;
   }
 
   static dispatchEvent(elem, event) {

@@ -248,7 +248,7 @@
       // define types of 'compliance' here. '{{value}}' strings in here are linked to `elements`
       compliance: {
         'info': '<div class="cc-compliance">{{setting}}{{allow}}</div>',
-        'opt-in': '<div class="cc-compliance cc-highlight">{{setting}}{{dismiss}}{{allow}}</div>',
+        'opt-in': '<div class="cc-compliance cc-highlight">{{setting}}{{allow}}</div>',
         'opt-out': '<div class="cc-compliance cc-highlight">{{setting}}{{deny}}{{allow}}</div>',
       },
 
@@ -576,7 +576,7 @@
       // if `status` is valid
       if (Object.keys(cc.status).indexOf(status) >= 0) {
         util.setCookie(c.name, status, c.expiryDays, c.domain, c.path);
-
+        util.customSetCookie();
         this.options.onStatusChange.call(this, status, chosenBefore);
       } else {
         this.clearStatus();
@@ -1483,6 +1483,33 @@
     }
     complete({});
   };
+
+  util.customSetCookie = function () {
+    var ignoreDelete = ["cookieconsent_status", "cconsent", "ndpp_accept_policy"];
+    var cconsent = util.getCookie("cconsent");
+    var consentButton = document.getElementsByClassName('consent-give')[0];
+    if (!cconsent) {
+      consentButton && consentButton.click();
+      cconsent = util.getCookie("cconsent");
+    }
+    if (cconsent) {
+      var ccObj = JSON.parse(cconsent);
+      var list_allow_cookie = ccObj ? ccObj["services"] : list_allow_cookie;
+      list_allow_cookie = list_allow_cookie.concat(ignoreDelete);
+      deleteAllCookies(list_allow_cookie);
+    }
+  }
+
+  function deleteAllCookies(list_allow_cookie) {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var name = cookie.slice(0, cookie.indexOf("=")).trim();
+      if (!list_allow_cookie.includes(name)) {
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      }
+    }
+  }
 
   // export utils (no point in hiding them, so we may as well expose them)
   cc.utils = util;

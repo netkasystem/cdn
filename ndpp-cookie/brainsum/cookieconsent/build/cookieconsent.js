@@ -1354,21 +1354,27 @@ var Utilities = /*#__PURE__*/function () {
   }, {
     key: "listGlobalServices",
     value: function listGlobalServices(category) {
-      var categories = []; // Global config objectnot set
+      var services = []; // Global config objectnot set
 
-      if (typeof window.CookieConsent === 'undefined') return categories; // Category is not specified or opposite
+      if (typeof window.CookieConsent === 'undefined') return services;
+      var categories = category !== null && category !== void 0 ? category : window.CookieConsent.config.categories;
+      var categoriesKey = [];
 
-      if (typeof category === 'undefined') {
-        for (var key in window.CookieConsent.config.services) {
-          categories.push(key);
-        }
-      } else {
-        for (var _key in window.CookieConsent.config.services) {
-          if (window.CookieConsent.config.services[_key].category === category) categories.push(_key);
+      for (var key in categories) {
+        var _categories$key;
+
+        if ((_categories$key = categories[key]) !== null && _categories$key !== void 0 && _categories$key.wanted) {
+          categoriesKey.push(key);
         }
       }
 
-      return categories;
+      for (var _key in window.CookieConsent.config.services) {
+        if (categoriesKey.includes(window.CookieConsent.config.services[_key].category)) {
+          services.push(_key);
+        }
+      }
+
+      return services;
     }
   }, {
     key: "dispatchEvent",
@@ -2899,7 +2905,7 @@ var Interface = /*#__PURE__*/function () {
           button.addEventListener('click', function () {
             // We set config to full consent
             for (var key in window.CookieConsent.config.categories) {
-              window.CookieConsent.config.categories[key].wanted = window.CookieConsent.config.categories[key].checked = true;
+              window.CookieConsent.config.categories[key].wanted = window.CookieConsent.config.categories[key].checked === true;
             }
 
             _this.writeBufferToDOM();
