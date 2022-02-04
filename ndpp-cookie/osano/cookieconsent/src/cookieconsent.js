@@ -565,12 +565,12 @@
 
     // opens the popup if no answer has been given
     CookiePopup.prototype.autoOpen = function (options) {
-      !this.hasAnswered() && this.options.enabled && this.open();
-      
-      if (this.options.revokable) {
+      if (!this.hasAnswered() && this.options.enabled) {
+        this.open();
+      } else if (this.options.revokable) {
         this.toggleRevokeButton(true);
       }
-      if (this.hasAnswered()){
+      if (this.hasAnswered()) {
         util.customSetCookie();
       }
     };
