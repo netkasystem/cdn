@@ -1503,12 +1503,12 @@
       var ccObj = JSON.parse(cconsent);
       var list_allow_cookie = ccObj ? ccObj["services"] : list_allow_cookie;
       list_allow_cookie = list_allow_cookie.concat(ignoreDelete);
-      deleteAllCookies(list_allow_cookie);
+      RemoveCookies(list_allow_cookie);
     }
   }
 
-  function deleteAllCookies(list_allow_cookie) {
-    var cookies = document.cookie.split(";");
+  function RemoveCookies(list_allow_cookie) {
+    var cookies = document.cookie ? document.cookie.split(";") : [];
     for (var i = 0; i < cookies.length; i++) {
       var cookie = cookies[i];
       var name = cookie.slice(0, cookie.indexOf("=")).trim();
