@@ -43,7 +43,7 @@ export default class Interface {
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-content {padding:25px 35px; margin:0}',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-head { transition: background-color .5s ease-out }',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-head:hover { background-color:#F9F9F9 }',
-      '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-head {font-weight:600; cursor:pointer; position:relative;}',
+      '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tab-head {font-weight:600; cursor:pointer; position:relative; float: none !important; width: auto !important;}',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tabgroup .ccm__tab-content {display:none;}',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tabgroup.ccm__tabgroup--open .ccm__tab-head { background-color:#F9F9F9 }',
       '#cconsent-modal .ccm__content > .ccm__content__body .ccm__tabgroup.ccm__tabgroup--open .ccm__tab-content {display:flex;}',
@@ -268,7 +268,7 @@ export default class Interface {
 
       //remove style before create
       document.querySelectorAll('style').forEach(x => {
-        if (x.innerText.includes("cconsent")) { x.remove(); }
+        if (x.innerText && x.innerText.includes("cconsent")) { x.remove(); }
       });
       that.render('style', that.buildStyle());
 
