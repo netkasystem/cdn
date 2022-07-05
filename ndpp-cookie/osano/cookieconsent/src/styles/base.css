@@ -94,7 +94,7 @@
   position: absolute;
   top: .5em;
   right: .5em;
-  font-size: 1.6em;
+  font-size: 1em;
   opacity: .9;
 
   /* seeing as this contains text and not an image, the element taller than it is wide (because it is text) */

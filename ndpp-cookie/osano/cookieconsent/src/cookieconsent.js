@@ -213,7 +213,7 @@
         href: 'http://cookiesandyou.com',
         link_2: 'Privacy policy',
         href_2: 'http://cookiesandyou.com',
-        close: '&#x274c;',
+        close: '&#x274E;',
         setting: 'Cookie Preferences',
       },
 
@@ -267,7 +267,7 @@
       },
 
       // default layout (see above)
-      layout: 'basic',
+      layout: 'basic-close',
 
       // this refers to the popup windows position. we currently support:
       //  - banner positions: top, bottom
