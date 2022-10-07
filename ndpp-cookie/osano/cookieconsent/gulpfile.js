@@ -30,6 +30,13 @@ gulp.task('cleanup:begin', function () {
   return deleteDirs(['./build']);
 });
 
+gulp.task('build:js', function () {
+  return gulp.src(jsBuildFiles)            // get files
+    // .pipe(minifyJS())                      // minify them
+    .pipe(concat('cookieconsent.js'))  // combine them
+    .pipe(gulp.dest(buildFolder));          // save under a new name
+});
+
 gulp.task('minify:js', function () {
   return gulp.src(jsBuildFiles)            // get files
     .pipe(minifyJS())                      // minify them
@@ -37,45 +44,47 @@ gulp.task('minify:js', function () {
     .pipe(gulp.dest(buildFolder));          // save under a new name
 });
 
-gulp.task('create_osano_file', function () {
-  return gulp.src('./build/cookieconsent.min.js')// get files
-    .pipe(rename('cookieconsent_osano.min.js'))  // combine them
-    .pipe(gulp.dest(buildFolder));                       // save under a new name
-});
-
 gulp.task('minify:css', function () {
   return gulp.src(cssBuildFiles)            // get files
-    .pipe(autoprefixer({browsers: ['IE 10', 'last 2 versions']}))
+    .pipe(autoprefixer({ browsers: ['IE 10', 'last 2 versions'] }))
     .pipe(minifyCSS())                      // minify them
     .pipe(concat('cookieconsent.min.css'))  // combine them
     .pipe(gulp.dest(buildFolder));          // save under a new name
 });
 
-gulp.task('create_osano_css_file', function () {
+gulp.task('osano:build', function () {
+   gulp.src('./build/cookieconsent.js')// get files
+    .pipe(rename('cookieconsent_osano.js'))  // combine them
+    .pipe(gulp.dest(buildFolder));   
+    
+   gulp.src('./build/cookieconsent.min.js')// get files
+    .pipe(rename('cookieconsent_osano.min.js'))  // combine them
+    .pipe(gulp.dest(buildFolder)); // save under a new name
+
   return gulp.src('./build/cookieconsent.min.css')// get files
     .pipe(rename('cookieconsent_osano.min.css'))  // combine them
-    .pipe(gulp.dest(buildFolder));                       // save under a new name
+    .pipe(gulp.dest(buildFolder));
 });
 
-gulp.task('bump', function(callback) {
+gulp.task('bump', function (callback) {
   gulp.src(['./bower.json', './package.json'])
-      .pipe(bump({'version': yargs.argv.tag}))
-      .pipe(gulp.dest('./'))
+    .pipe(bump({ 'version': yargs.argv.tag }))
+    .pipe(gulp.dest('./'))
 });
 
-gulp.task('build', function(callback) {
-  return runSequence('cleanup:begin', 'minify:js', 'minify:css', 'create_osano_file', 'create_osano_css_file', callback);
+gulp.task('build', function (callback) {
+  return runSequence('cleanup:begin', 'build:js', 'minify:js', 'minify:css', 'osano:build', callback);
 });
 
-gulp.task('build:release', function(callback) {
-  if (yargs.argv.tag===undefined) {
+gulp.task('build:release', function (callback) {
+  if (yargs.argv.tag === undefined) {
     throw "A version number (e.g. 3.0.1) is required to build a release of cookieconsent"
   }
 
   return runSequence('build', 'bump')
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   gulp.watch(cssBuildFiles.concat(jsBuildFiles), ['build']);
 });
 
